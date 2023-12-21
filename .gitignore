@@ -1,1 +1,4 @@
 /out/
+.metals/
+.scala-build/
+.vscode/
