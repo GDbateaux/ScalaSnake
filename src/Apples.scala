@@ -4,4 +4,8 @@ class Apples(val appleNumber: Int = 1, lengthGrid: Int) {
   for(i: Int <- 0 until appleNumber){
     positions(i) = new Position((math.random()*lengthGrid).toInt, (math.random()*lengthGrid).toInt)
   }
+
+  def regenerateApple(appleIndice: Int): Unit = {
+    positions(appleIndice) = new Position((math.random()*lengthGrid).toInt, (math.random()*lengthGrid).toInt)
+  }
 }
