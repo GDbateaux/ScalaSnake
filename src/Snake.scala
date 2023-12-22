@@ -1,5 +1,5 @@
 class Snake(gridSideLength: Int) {
-  var positions: Array[Position] = new Array(gridSideLength)
+  var positions: Array[Position] = new Array(math.pow(gridSideLength, 2).toInt)
   var length: Int = 3;
   private var headPos: Position = new Position(gridSideLength/2+1, gridSideLength/2)
 
@@ -8,13 +8,14 @@ class Snake(gridSideLength: Int) {
   }
 
   def move(x: Int, y: Int): Unit = {
-    for (i: Int <- length-1 to 0 by -1) {
-      if (i > 0) {
-        print(i)
-        positions(i) = positions(i - 1)
-      }
-      else {
-        positions(i) = new Position(positions(i).x + x, positions(i).y + y)
+    if(x != 0 || y != 0) {
+      for (i: Int <- length - 1 to 0 by -1) {
+        if (i > 0) {
+          positions(i) = positions(i - 1)
+        }
+        else {
+          positions(i) = new Position(positions(i).x + x, positions(i).y + y)
+        }
       }
     }
   }

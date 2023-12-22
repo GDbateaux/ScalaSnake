@@ -1,11 +1,23 @@
-class Apples(val appleNumber: Int = 1, lengthGrid: Int) {
-  val positions: Array[Position] = new Array[Position](appleNumber)
+class Apples(val appleNumber: Int = 1, emptySquares: Array[Position]) {
+  val positions: Array[Position] = getNewPositionsApples(emptySquares, appleNumber)
+  def getNewPositionsApples(emptySquares: Array[Position], numberApples: Int): Array[Position] = {
+    val pos: Array[Position] = new Array[Position](numberApples)
 
-  for(i: Int <- 0 until appleNumber){
-    positions(i) = new Position((math.random()*lengthGrid).toInt, (math.random()*lengthGrid).toInt)
+    for (i: Int <- 0 until numberApples) {
+      var rdm: Int = (math.random() * (emptySquares.length - i)).toInt
+      pos(i) = emptySquares(rdm)
+      emptySquares(rdm) = emptySquares(emptySquares.length - 1 - i)
+    }
+    return pos
   }
-
-  def regenerateApple(appleIndice: Int): Unit = {
-    positions(appleIndice) = new Position((math.random()*lengthGrid).toInt, (math.random()*lengthGrid).toInt)
+  def regenerateApple(actualEmptySquares: Array[Position], appleIndice: Int): Unit = {
+    println(actualEmptySquares.mkString(","))
+    if(!actualEmptySquares.isEmpty) {
+      var rdm: Int = (math.random() * actualEmptySquares.length).toInt
+      positions(appleIndice) = actualEmptySquares(rdm)
+    }
+    else{
+      positions(appleIndice) = new Position(-1, -1)
+    }
   }
 }

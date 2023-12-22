@@ -1,6 +1,6 @@
 class Grid(val sideLength: Int, val appleNumber: Int) {
   val snake: Snake = new Snake(sideLength)
-  val apples: Apples = new Apples(appleNumber, sideLength)
+  val apples: Apples = new Apples(appleNumber, getEmptySquares(false))
 
   override def toString(): String = {
     var grid: String = ""
@@ -33,12 +33,16 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
   }
 
 
-  def getEmptySquares(isApplesGenerated: Boolean): Array[Position] = {
-    var numberGeneratedApple = 0
+  def getEmptySquares(isApplesGenerated: Boolean = true): Array[Position] = {
+    var numberGeneratedApple: Int = 0
     if(isApplesGenerated){
       numberGeneratedApple = appleNumber
     }
-    var emptySquares: Array[Position] = new Array(sideLength^2 - snake.length - numberGeneratedApple)
+    var emptySquareLength: Int = math.pow(sideLength, 2).toInt - snake.length - numberGeneratedApple
+    if(math.pow(sideLength, 2).toInt - snake.length - numberGeneratedApple <= 0) {
+      emptySquareLength = 0
+    }
+    var emptySquares: Array[Position] = new Array(emptySquareLength)
     var counter: Int = 0
 
     for (y: Int <- 0 until sideLength) {
@@ -59,7 +63,7 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
           }
         }
 
-        if (squareIsEmpty) {
+        if (squareIsEmpty && emptySquares.length != 0) {
           emptySquares(counter) = position;
           counter += 1;
         }
@@ -69,12 +73,12 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     return emptySquares;
   }
 
-  def snakeWillEatApple(x: Int, y: Int): Boolean = {
+  def snakeWillEatApple(x: Int, y: Int): Int = {
     for (i: Int <- apples.positions.indices) {
-      if (apples.positions(i).x == snake.positions(snake.positions.length - 1).x + x && apples.positions(i).y == snake.positions(snake.positions.length - 1).y + y) {
-        return true
+      if (apples.positions(i).x == snake.positions(0).x + x && apples.positions(i).y == snake.positions(0).y + y) {
+        return i
       }
     }
-    return false
+    return -1
   }
 }
