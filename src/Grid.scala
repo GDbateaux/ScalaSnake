@@ -52,6 +52,7 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
           if (snake.positions(i).x == position.x && snake.positions(i).y == position.y) {
             display.setColor(Color.red)
             display.drawFillRect(SQUARE_LENGTH*x, SQUARE_LENGTH*y, SQUARE_LENGTH, SQUARE_LENGTH)
+            //display.drawTransformedPicture(SQUARE_LENGTH*x, SQUARE_LENGTH*y, 0, 1, "./rob.png")
             addedElement = true
           }
         }

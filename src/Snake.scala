@@ -7,15 +7,19 @@ class Snake(gridSideLength: Int) {
     positions(i) = new Position(headPos.x - i, headPos.y)
   }
 
-  def isLost: Boolean = {
+  def willLose(movementX: Int, movementY: Int): Boolean = {
+    val nextPosX: Int = positions(0).x + movementX
+    val nextPosY: Int = positions(0).y + movementY
+
     var isLost: Boolean = false
-    if(positions(0).x < 0 || positions(0).y < 0 || positions(0).x > gridSideLength-1 || positions(0).y > gridSideLength-1){
+
+    if(nextPosX < 0 || nextPosY < 0 || nextPosX > gridSideLength-1 || nextPosY > gridSideLength-1){
       isLost = true
     }
 
     for (i <- positions.indices){
       if(i != 0 && i < length){
-        if(positions(i).x == positions(0).x && positions(i).y == positions(0).y){
+        if(positions(i).x == nextPosX && positions(i).y == nextPosY){
           isLost = true
         }
       }
