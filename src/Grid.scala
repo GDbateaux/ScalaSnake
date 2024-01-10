@@ -56,9 +56,20 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
           if (snake.positions(i).x == position.x && snake.positions(i).y == position.y) {
             display.setColor(Color.red)
             if(i == 0){
-              val bimg: BufferedImage = ImageIO.read(new File("./img/rob.png"))
+              val bimg: BufferedImage = ImageIO.read(new File("./img/snake.png"))
               val width = bimg.getWidth
-              display.drawTransformedPicture(SQUARE_LENGTH*x+SQUARE_LENGTH/2, SQUARE_LENGTH*y+SQUARE_LENGTH/2, 0, SQUARE_LENGTH / width, "/img/rob.png")
+              if(snake.positions(1).x == snake.positions(0).x-1) {
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, math.Pi/2, SQUARE_LENGTH / width, "/img/snake.png")
+              }
+              else if(snake.positions(1).x == snake.positions(0).x+1){
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, -math.Pi/2, SQUARE_LENGTH / width, "/img/snake.png")
+              }
+              else if (snake.positions(1).y == snake.positions(0).y - 1) {
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, math.Pi, SQUARE_LENGTH / width, "/img/snake.png")
+              }
+              else {
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, 0, SQUARE_LENGTH / width, "/img/snake.png")
+              }
             }
             else {
               display.drawFillRect(SQUARE_LENGTH * x, SQUARE_LENGTH * y, SQUARE_LENGTH, SQUARE_LENGTH)
