@@ -1,11 +1,15 @@
 import hevs.graphics.FunGraphics
+import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.Color
+import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
 
 class Grid(val sideLength: Int, val appleNumber: Int) {
   val snake: Snake = new Snake(sideLength)
   val apples: Apples = new Apples(appleNumber, getEmptySquares(false))
-  private val SQUARE_LENGTH: Int = 20
+  private val SQUARE_LENGTH: Int = 40
   private val GRAPHICS_WIDTH: Int = SQUARE_LENGTH * sideLength
   private val GRAPHICS_HEIGHT: Int = GRAPHICS_WIDTH
   val display: FunGraphics = new FunGraphics(GRAPHICS_WIDTH, GRAPHICS_HEIGHT, 20, 20, "Hangman", true)
@@ -51,15 +55,23 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
         for (i: Int <- 0 until snake.length) {
           if (snake.positions(i).x == position.x && snake.positions(i).y == position.y) {
             display.setColor(Color.red)
-            display.drawFillRect(SQUARE_LENGTH*x, SQUARE_LENGTH*y, SQUARE_LENGTH, SQUARE_LENGTH)
-            //display.drawTransformedPicture(SQUARE_LENGTH*x, SQUARE_LENGTH*y, 0, 1, "./rob.png")
+            if(i == 0){
+              val bimg: BufferedImage = ImageIO.read(new File("./img/rob.png"))
+              val width = bimg.getWidth
+              display.drawTransformedPicture(SQUARE_LENGTH*x+SQUARE_LENGTH/2, SQUARE_LENGTH*y+SQUARE_LENGTH/2, 0, SQUARE_LENGTH / width, "/img/rob.png")
+            }
+            else {
+              display.drawFillRect(SQUARE_LENGTH * x, SQUARE_LENGTH * y, SQUARE_LENGTH, SQUARE_LENGTH)
+            }
             addedElement = true
           }
         }
         for (i: Int <- apples.positions.indices) {
           if (apples.positions(i).x == position.x && apples.positions(i).y == position.y) {
             display.setColor(Color.blue)
-            display.drawFillRect(SQUARE_LENGTH*x, SQUARE_LENGTH*y, SQUARE_LENGTH, SQUARE_LENGTH)
+            val bimg: BufferedImage = ImageIO.read(new File("./img/apple.png"))
+            val width = bimg.getWidth
+            display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, 0, SQUARE_LENGTH / width, "/img/apple.png")
             addedElement = true
           }
         }

@@ -4,8 +4,9 @@ import java.util.Scanner
 object SnakeTester extends App {
   val SIDELENGTH: Int = 10
   val APPLENUMBER: Int = 5
+  val SPEED: Int = 150
   var grid: Grid = new Grid(SIDELENGTH, APPLENUMBER)
-  var gameIsFinish: Boolean = false
+  private var gameIsFinish: Boolean = false
   var movementX: Int = 0
   var movementY: Int = 0
   var movementBufferedChar: Char = ' '
@@ -38,7 +39,7 @@ object SnakeTester extends App {
             movementY = 0 - movementY
           }
         }
-        else if (bufferCounter != 0) {
+        else {
           movementBufferedChar = e.getKeyChar
         }
 
@@ -103,6 +104,6 @@ object SnakeTester extends App {
     }
 
     grid.updateGrid()
-    Thread.sleep(150)
+    Thread.sleep(SPEED)
   }
 }
