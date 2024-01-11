@@ -69,9 +69,9 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
         for (i: Int <- apples.positions.indices) {
           if (apples.positions(i).x == position.x && apples.positions(i).y == position.y) {
             display.setColor(Color.blue)
-            val bimg: BufferedImage = ImageIO.read(new File("./img/apple.png"))
+            val bimg: BufferedImage = ImageIO.read(new File("./img/OJApple.png"))
             val width = bimg.getWidth
-            display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, 0, SQUARE_LENGTH / width, "/img/apple.png")
+            display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, 0, SQUARE_LENGTH / width, "/img/OJApple.png")
             addedElement = true
           }
         }
