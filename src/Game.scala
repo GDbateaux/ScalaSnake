@@ -103,7 +103,7 @@ object Game extends App {
       movementBufferedChar = ' ';
     }
 
-    grid.updateGrid()
+    grid.updateGrid(5)
     Thread.sleep(SPEED)
   }
 }
