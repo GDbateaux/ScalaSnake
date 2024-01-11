@@ -11,6 +11,7 @@ object SnakeTester extends App {
   var movementY: Int = 0
   var movementBufferedChar: Char = ' '
   var bufferCounter: Int = 0
+
   val keyListener: KeyListener = new KeyListener {
     override def keyTyped(e: KeyEvent): Unit = {}
 

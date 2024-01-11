@@ -9,6 +9,7 @@ import javax.imageio.ImageIO
 class Grid(val sideLength: Int, val appleNumber: Int) {
   val snake: Snake = new Snake(sideLength)
   val apples: Apples = new Apples(appleNumber, getEmptySquares(false))
+  private var score: Int = 0
   private val SQUARE_LENGTH: Int = 40
   private val GRAPHICS_WIDTH: Int = SQUARE_LENGTH * sideLength
   private val GRAPHICS_HEIGHT: Int = GRAPHICS_WIDTH
@@ -47,6 +48,7 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
   def updateGrid(): Unit = {
     var position: Position = new Position(0, 0)
     var addedElement: Boolean = false
+    score = snake.length - 3
 
     for (y: Int <- 0 until sideLength) {
       for (x: Int <- 0 until sideLength) {
@@ -54,11 +56,22 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
         addedElement = false
         for (i: Int <- 0 until snake.length) {
           if (snake.positions(i).x == position.x && snake.positions(i).y == position.y) {
-            display.setColor(Color.red)
+            display.setColor(Color.green)
             if(i == 0){
-              val bimg: BufferedImage = ImageIO.read(new File("./img/rob.png"))
+              val bimg: BufferedImage = ImageIO.read(new File("./img/snake.png"))
               val width = bimg.getWidth
-              display.drawTransformedPicture(SQUARE_LENGTH*x+SQUARE_LENGTH/2, SQUARE_LENGTH*y+SQUARE_LENGTH/2, 0, SQUARE_LENGTH / width, "/img/rob.png")
+              if(snake.positions(1).x == snake.positions(0).x-1) {
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, math.Pi/2, SQUARE_LENGTH / width, "/img/snake.png")
+              }
+              else if(snake.positions(1).x == snake.positions(0).x+1){
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, -math.Pi/2, SQUARE_LENGTH / width, "/img/snake.png")
+              }
+              else if (snake.positions(1).y == snake.positions(0).y - 1) {
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, math.Pi, SQUARE_LENGTH / width, "/img/snake.png")
+              }
+              else {
+                display.drawTransformedPicture(SQUARE_LENGTH * x + SQUARE_LENGTH / 2, SQUARE_LENGTH * y + SQUARE_LENGTH / 2, 0, SQUARE_LENGTH / width, "/img/snake.png")
+              }
             }
             else {
               display.drawFillRect(SQUARE_LENGTH * x, SQUARE_LENGTH * y, SQUARE_LENGTH, SQUARE_LENGTH)
@@ -80,6 +93,8 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
           display.drawFillRect(SQUARE_LENGTH*x, SQUARE_LENGTH*y, SQUARE_LENGTH, SQUARE_LENGTH)
         }
       }
+      display.setColor(Color.black)
+      display.drawString(10, 20, s"Sccore : $score")
     }
   }
 
