@@ -93,9 +93,9 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
           display.drawFillRect(SQUARE_LENGTH*x, SQUARE_LENGTH*y, SQUARE_LENGTH, SQUARE_LENGTH)
         }
       }
-      display.setColor(Color.black)
-      display.drawString(10, 20, s"Sccore : $score")
     }
+    display.setColor(Color.black)
+    display.drawString(10, 20, s"Sccore : $score")
   }
 
   def getEmptySquares(isApplesGenerated: Boolean = true): Array[Position] = {
