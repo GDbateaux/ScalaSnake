@@ -10,6 +10,18 @@ class Apples(val appleNumber: Int = 1, emptySquares: Array[Position]) {
     }
     return pos
   }
+
+  def contains(pos: Position): Boolean = {
+    var contains: Boolean = false
+
+    for (p: Position <- positions) {
+      if (p.x == pos.x && p.y == pos.y) {
+        contains = true
+      }
+    }
+    return contains
+  }
+
   def regenerateApple(actualEmptySquares: Array[Position], appleIndice: Int): Unit = {
     if(!actualEmptySquares.isEmpty) {
       var rdm: Int = (math.random() * actualEmptySquares.length).toInt

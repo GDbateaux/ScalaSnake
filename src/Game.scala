@@ -1,4 +1,4 @@
-import java.awt.event.{KeyEvent, KeyListener}
+import java.awt.event.{KeyEvent, KeyListener, MouseEvent, MouseListener}
 
 object Game extends App {
   val SIDELENGTH: Int = 11
@@ -10,6 +10,7 @@ object Game extends App {
   var movementY: Int = 0
   var movementBufferedChar: Char = ' '
   var bufferCounter: Int = 0
+  var firstLoop: Boolean = true
 
   val keyListener: KeyListener = new KeyListener {
     override def keyTyped(e: KeyEvent): Unit = {}
@@ -103,7 +104,7 @@ object Game extends App {
       movementBufferedChar = ' ';
     }
 
-    grid.updateGrid(5)
-    Thread.sleep(SPEED)
+    grid.updateGrid(600, firstLoop)
+    firstLoop = false
   }
 }

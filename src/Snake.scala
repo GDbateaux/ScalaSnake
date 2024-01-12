@@ -7,6 +7,17 @@ class Snake(gridSideLength: Int) {
     positions(i) = new Position(headPos.x - i, headPos.y)
   }
 
+  def contains(pos: Position): Boolean = {
+    var contains: Boolean = false
+
+    for (i: Int <- 0 until length){
+      if(positions(i).x == pos.x && positions(i).y == pos.y){
+        contains = true
+      }
+    }
+    return contains
+  }
+
   def willLose(movementX: Int, movementY: Int): Boolean = {
     val nextPosX: Int = positions(0).x + movementX
     val nextPosY: Int = positions(0).y + movementY
@@ -26,7 +37,6 @@ class Snake(gridSideLength: Int) {
     }
     return isLost
   }
-
   def move(x: Int, y: Int): Unit = {
     if(x != 0 || y != 0) {
       for (i: Int <- length - 1 to 0 by -1) {
