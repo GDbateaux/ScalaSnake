@@ -19,3 +19,6 @@ Pour relancer une partie perdue, cliquer sur la touche espace.
 - La classe Snake  contient les méthodes pour faire situer le serpent, le faire avancer, grandir ou détecter si le serpent va perdre.
 - La classe Grid contient les méthodes pour positionner le serpent et les pommes sur la grille.
 
+
+## Commentaires du code
+![joke.jpg](img%2Freadme%2Fjoke.jpg)

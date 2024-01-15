@@ -1,6 +1,5 @@
 import java.awt.Color
-import java.awt.event.{KeyEvent, KeyListener, MouseEvent, MouseListener}
-import javax.swing.SwingConstants
+import java.awt.event.{ KeyEvent, KeyListener }
 
 object Game extends App {
   val SIDELENGTH: Int = 15
