@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
+/**
+ * Représente une grille pour le jeu du Snake, comprenant le serpent, les pommes et l'affichage graphique.
+ *
+ * @param sideLength La longueur du côté de la grille carrée.
+ * @param appleNumber Le nombre de pommes initialement placées sur la grille.
+ */
 class Grid(val sideLength: Int, val appleNumber: Int) {
   var snake: Snake = new Snake(sideLength)
   var apples: Apples = new Apples(appleNumber, getEmptySquares(false))
@@ -14,6 +20,11 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
   private val GRAPHICS_HEIGHT: Int = GRAPHICS_WIDTH
   val display: FunGraphics = new FunGraphics(GRAPHICS_WIDTH, GRAPHICS_HEIGHT, 20, 20, "Snake", true)
 
+  /**
+   * Retourne un string qui simule la grille, montrant les positions du serpent, des pommes et des cases vides.
+   *
+   * @return la grille sous forme de string
+   */
   override def toString: String = {
     var grid: String = ""
     var position: Position = new Position(0, 0)
@@ -44,6 +55,11 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     return grid
   }
 
+  /**
+   * Met à jour la grille du jeu Snake, y compris le serpent et les pommes.
+   * Une animation est réalisée sur le serpent à chaque mise à jour pour qu'il se déplace de pixel en pixel.
+   * @param FPS Le nombre d'images par seconde.
+   */
   def updateGrid(FPS: Int): Unit = {
     val bimgApple: BufferedImage = ImageIO.read(new File("./img/OJApple.png"))
     val widthApple = bimgApple.getWidth
@@ -129,12 +145,21 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     display.drawFancyString(8, 10, s"Score : $score", fontSize=10)
   }
 
+  /**
+   * Redémarre le jeu en réinitialisant le serpent, les pommes et le score.
+   */
   def restartGame(): Unit = {
     snake = new Snake(sideLength)
     apples = new Apples(appleNumber, getEmptySquares(false))
     score = 0
   }
 
+  /**
+   * Récupère les positions des cases vides sur la grille, en excluant les positions occupées par le serpent et les pommes.
+   *
+   * @param isApplesGenerated Indique si les positions des pommes sont déjà générées.
+   * @return Un tableau de positions représentant les cases vides.
+   */
   def getEmptySquares(isApplesGenerated: Boolean = true): Array[Position] = {
     var numberGeneratedApple: Int = 0
     if(isApplesGenerated){
@@ -174,6 +199,12 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     return emptySquares
   }
 
+  /**
+   * Met à jour la tête du serpent en affichant son nouveau positionnement.
+   *
+   * @param x La nouvelle position horizontale de la tête du serpent.
+   * @param y La nouvelle position verticale de la tête du serpent.
+   */
   def updateHead(x: Int, y: Int): Unit = {
     val bimgSnake: BufferedImage = ImageIO.read(new File("./img/snake.png"))
     val widthSnake = bimgSnake.getWidth
@@ -195,6 +226,13 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     display.drawTransformedPicture(headCenterX, headCenterY, rotation, scale, imgName)
   }
 
+  /**
+   * Vérifie si la tête du serpent va manger une pomme à la nouvelle position spécifiée.
+   *
+   * @param x La prochaine position horizontale du serpent.
+   * @param y La prochaine position verticale du serpent.
+   * @return L'indice de la pomme que le serpent va manger, ou -1 s'il n'y a pas de pomme à cette position.
+   */
   def snakeWillEatApple(x: Int, y: Int): Int = {
     for (i: Int <- apples.positions.indices) {
       if (apples.positions(i).x == snake.positions(0).x + x && apples.positions(i).y == snake.positions(0).y + y) {
