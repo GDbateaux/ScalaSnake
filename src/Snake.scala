@@ -7,6 +7,11 @@ class Snake(gridSideLength: Int) {
     positions(i) = new Position(headPos.x - i, headPos.y)
   }
 
+  /**
+   * Vérifie si le serpent contient une position sur la grille
+   * @param pos Position sur la grille
+   * @return true si le serpent contient la position, sinon false
+   */
   def contains(pos: Position): Boolean = {
     var contains: Boolean = false
 
@@ -18,6 +23,12 @@ class Snake(gridSideLength: Int) {
     return contains
   }
 
+  /**
+   * Test si après un mouvement le serpent va se cogner contre un mur, ou contre lui-même
+   * @param movementX Mouvement dans la direction X
+   * @param movementY Mouvement dans la direction Y
+   * @return True si le serpent va perdre sinnon false
+   */
   def willLose(movementX: Int, movementY: Int): Boolean = {
     val nextPosX: Int = positions(0).x + movementX
     val nextPosY: Int = positions(0).y + movementY
@@ -37,6 +48,12 @@ class Snake(gridSideLength: Int) {
     }
     return isLost
   }
+
+  /**
+   * Fais avancer le serpent dans une direction
+   * @param x La direction en X
+   * @param y La direction en Y
+   */
   def move(x: Int, y: Int): Unit = {
     if(x != 0 || y != 0) {
       for (i: Int <- length - 1 to 0 by -1) {
@@ -50,6 +67,10 @@ class Snake(gridSideLength: Int) {
     }
   }
 
+  /**
+   * Fait grandir le serpent
+   * @param lastTailPos Position de la queue avant le mouvement
+   */
   def grow(lastTailPos: Position): Unit = {
     positions(length) = lastTailPos
     length += 1

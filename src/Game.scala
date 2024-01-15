@@ -15,6 +15,7 @@ object Game extends App {
   var moveCounter: Int = 0
   var firstLoop: Boolean = true
 
+  // Ecoute les touches du clavier
   val keyListener: KeyListener = new KeyListener {
     override def keyTyped(e: KeyEvent): Unit = {}
 
@@ -73,12 +74,18 @@ object Game extends App {
   grid.display.setKeyManager(keyListener)
   newGame();
 
+  /**
+   * Crée la partie
+   */
   def newGame(): Unit = {
     while (true) {
       startGame()
     }
   }
 
+  /**
+   * Logique de jeu
+   */
   def startGame(): Unit = {
     if(firstLoop) {
       grid.display.clear()
@@ -91,6 +98,7 @@ object Game extends App {
 
         if (grid.snake.willLose(movementX, movementY)) {
           gameIsFinish = true
+          grid.updateHead(movementX, movementY)
           grid.display.setColor(Color.white)
           grid.display.drawFillRect(grid.display.width / 2 - 135, 0, 270, 25)
           grid.display.setColor(Color.black)
@@ -156,10 +164,6 @@ object Game extends App {
         if (moveCounter == 1) {
           grid.display.setColor(Color.white)
           grid.display.drawFillRect(grid.display.width / 2 - 125, 0, 250, 25)
-        }
-
-        if(gameIsFinish) {
-          grid.updateHead(movementX, movementY)
         }
       }
     }
