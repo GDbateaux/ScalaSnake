@@ -3,9 +3,9 @@ import java.awt.event.{KeyEvent, KeyListener, MouseEvent, MouseListener}
 import javax.swing.SwingConstants
 
 object Game extends App {
-  val SIDELENGTH: Int = 25
+  val SIDELENGTH: Int = 15
   val APPLENUMBER: Int = 5
-  val SPEED: Int = 15
+  val SPEED: Int = 400
   var grid: Grid = new Grid(SIDELENGTH, APPLENUMBER)
   private var gameIsFinish: Boolean = false
   var movementX: Int = 0
@@ -34,22 +34,22 @@ object Game extends App {
 
       if (movementBufferedChar == ' ') {
         if (bufferCounter == 0) {
-          if (e.getKeyChar == 'w') {
+          if (e.getKeyChar == 'w' || e.getKeyChar == 'W') {
             movementX = 0
             movementY = -1
             moveCounter += 1
           }
-          else if (e.getKeyChar == 'd') {
+          else if (e.getKeyChar == 'd' || e.getKeyChar == 'D') {
             movementX = 1
             movementY = 0
             moveCounter += 1
           }
-          else if (e.getKeyChar == 's') {
+          else if (e.getKeyChar == 's' || e.getKeyChar == 'S') {
             movementX = 0
             movementY = 1
             moveCounter += 1
           }
-          else if (e.getKeyChar == 'a') {
+          else if (e.getKeyChar == 'a' || e.getKeyChar == 'A') {
             movementX = -1
             movementY = 0
             moveCounter += 1
@@ -92,7 +92,7 @@ object Game extends App {
         if (grid.snake.willLose(movementX, movementY)) {
           gameIsFinish = true
           grid.display.setColor(Color.white)
-          grid.display.drawFillRect(grid.display.width / 2 - 125, 0, 250, 25)
+          grid.display.drawFillRect(grid.display.width / 2 - 135, 0, 270, 25)
           grid.display.setColor(Color.black)
           grid.display.drawFancyString(grid.display.width / 2 - 105, 15, "You lose, press space to restart", fontSize = 15)
         }
@@ -105,14 +105,6 @@ object Game extends App {
           else {
             grid.snake.move(movementX, movementY)
           }
-        }
-
-        if (grid.snake.length == math.pow(SIDELENGTH, 2)) {
-          gameIsFinish = true
-          grid.display.setColor(Color.white)
-          grid.display.drawFillRect(grid.display.width / 2 - 125, 0, 250, 25)
-          grid.display.setColor(Color.black)
-          grid.display.drawFancyString(grid.display.width / 2 - 105, 15, "You win, press space to restart", fontSize = 15)
         }
 
         if (movementBufferedChar != ' ') {
@@ -153,9 +145,21 @@ object Game extends App {
           grid.display.drawFancyString(grid.display.width / 2 - 105, 15, "Press any move key to start", fontSize = 15)
         }
 
+        if (grid.snake.length == math.pow(SIDELENGTH, 2)) {
+          gameIsFinish = true
+          grid.display.setColor(Color.white)
+          grid.display.drawFillRect(grid.display.width / 2 - 135, 0, 270, 25)
+          grid.display.setColor(Color.black)
+          grid.display.drawFancyString(grid.display.width / 2 - 105, 15, "You win, press space to restart", fontSize = 15)
+        }
+
         if (moveCounter == 1) {
           grid.display.setColor(Color.white)
           grid.display.drawFillRect(grid.display.width / 2 - 125, 0, 250, 25)
+        }
+
+        if(gameIsFinish) {
+          grid.updateHead(movementX, movementY)
         }
       }
     }

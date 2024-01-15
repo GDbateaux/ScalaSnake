@@ -120,12 +120,13 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
           display.drawTransformedPicture(SQUARE_LENGTH * apples.positions(i).x + SQUARE_LENGTH / 2, SQUARE_LENGTH * apples.positions(i).y + SQUARE_LENGTH / 2, 0, SQUARE_LENGTH / widthApple, "/img/OJApple.png")
         }
       }
+      display.syncGameLogic(FPS)
+
     }
 
     display.setColor(Color.white)
     display.drawFillRect(0,0,80,15)
     display.drawFancyString(8, 10, s"Score : $score", fontSize=10)
-    display.syncGameLogic(FPS)
   }
 
   def restartGame(): Unit = {
@@ -171,6 +172,27 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
       }
     }
     return emptySquares
+  }
+
+  def updateHead(x: Int, y: Int): Unit = {
+    val bimgSnake: BufferedImage = ImageIO.read(new File("./img/snake.png"))
+    val widthSnake = bimgSnake.getWidth
+    val imgName: String = "/img/snake.png"
+    var rotation: Double = 0
+    val headCenterX: Int = SQUARE_LENGTH * snake.positions(0).x + SQUARE_LENGTH / 2
+    val headCenterY: Int = SQUARE_LENGTH * snake.positions(0).y + SQUARE_LENGTH / 2
+    val scale: Double = SQUARE_LENGTH / widthSnake.toDouble
+
+    println(x)
+    println(y)
+    if(x == 0 && y == 1) {
+      rotation = math.Pi
+    } else if (x == 1 && y == 0) {
+      rotation = math.Pi / 2
+    } else if (x == -1 && y == 0) {
+      rotation = -math.Pi / 2
+    }
+    display.drawTransformedPicture(headCenterX, headCenterY, rotation, scale, imgName)
   }
 
   def snakeWillEatApple(x: Int, y: Int): Int = {
