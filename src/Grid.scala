@@ -162,33 +162,42 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
    */
   def getEmptySquares(isApplesGenerated: Boolean = true): Array[Position] = {
     var numberGeneratedApple: Int = 0
-    if (isApplesGenerated) {
+    if(isApplesGenerated){
       numberGeneratedApple = appleNumber
     }
-
-    val occupiedPositions: Array[Position] = new Array[Position](snake.length + numberGeneratedApple)
+    var emptySquareLength: Int = math.pow(sideLength, 2).toInt - snake.length - numberGeneratedApple
+    if(math.pow(sideLength, 2).toInt - snake.length - numberGeneratedApple <= 0) {
+      emptySquareLength = 0
+    }
+    var emptySquares: Array[Position] = new Array(emptySquareLength)
     var counter: Int = 0
 
-    // Remplir le tableau avec les positions du serpent et des pommes si nécessaire
-    for (i: Int <- 0 until snake.length + numberGeneratedApple) {
-      occupiedPositions(i) = if (i < snake.length) snake.positions(i) else apples.positions(i - snake.length)
+    for (y: Int <- 0 until sideLength) {
+      for (x: Int <- 0 until sideLength) {
+        var position: Position = new Position(x, y)
+        var squareIsEmpty = true
+
+        for (i: Int <- 0 until snake.length) {
+          if (snake.positions(i).x == position.x && snake.positions(i).y == position.y) {
+            squareIsEmpty = false
+          }
+        }
+        if(isApplesGenerated) {
+          for (i: Int <- apples.positions.indices) {
+            if (apples.positions(i).x == position.x && apples.positions(i).y == position.y) {
+              squareIsEmpty = false
+            }
+          }
+        }
+
+        if (squareIsEmpty && emptySquares.length != 0) {
+          emptySquares(counter) = position
+          counter += 1
+        }
+      }
     }
-
-    val allPositions: Array[Position] = new Array[Position](math.pow(sideLength, 2).toInt)
-    counter = 0
-
-    // Remplir le tableau avec toutes les positions possibles
-    for (y: Int <- 0 until sideLength; x: Int <- 0 until sideLength) {
-      allPositions(counter) = new Position(x, y)
-      counter += 1
-    }
-
-    // Filtrer les positions vides
-    val emptySquares: Array[Position] = allPositions.filterNot(pos => occupiedPositions.contains(pos))
-
-    emptySquares
+    return emptySquares
   }
-
 
   /**
    * Met à jour la tête du serpent en affichant son nouveau positionnement.
