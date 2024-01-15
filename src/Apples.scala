@@ -18,7 +18,7 @@ class Apples(val appleNumber: Int = 1, emptySquares: Array[Position]) {
     val pos: Array[Position] = new Array[Position](numberApples)
 
     for (i: Int <- 0 until numberApples) {
-      var rdm: Int = (math.random() * (emptySquares.length - i)).toInt
+      val rdm: Int = (math.random() * (emptySquares.length - i)).toInt
       pos(i) = emptySquares(rdm)
       emptySquares(rdm) = emptySquares(emptySquares.length - 1 - i)
     }
@@ -50,7 +50,7 @@ class Apples(val appleNumber: Int = 1, emptySquares: Array[Position]) {
    */
   def regenerateApple(actualEmptySquares: Array[Position], appleIndice: Int): Unit = {
     if(!actualEmptySquares.isEmpty) {
-      var rdm: Int = (math.random() * actualEmptySquares.length).toInt
+      val rdm: Int = (math.random() * actualEmptySquares.length).toInt
       positions(appleIndice) = actualEmptySquares(rdm)
     }
     else{

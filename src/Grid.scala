@@ -169,12 +169,12 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     if(math.pow(sideLength, 2).toInt - snake.length - numberGeneratedApple <= 0) {
       emptySquareLength = 0
     }
-    var emptySquares: Array[Position] = new Array(emptySquareLength)
+    val emptySquares: Array[Position] = new Array(emptySquareLength)
     var counter: Int = 0
 
     for (y: Int <- 0 until sideLength) {
       for (x: Int <- 0 until sideLength) {
-        var position: Position = new Position(x, y)
+        val position: Position = new Position(x, y)
         var squareIsEmpty = true
 
         for (i: Int <- 0 until snake.length) {
@@ -214,8 +214,6 @@ class Grid(val sideLength: Int, val appleNumber: Int) {
     val headCenterY: Int = SQUARE_LENGTH * snake.positions(0).y + SQUARE_LENGTH / 2
     val scale: Double = SQUARE_LENGTH / widthSnake.toDouble
 
-    println(x)
-    println(y)
     if(x == 0 && y == 1) {
       rotation = math.Pi
     } else if (x == 1 && y == 0) {

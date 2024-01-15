@@ -92,8 +92,8 @@ object Game extends App {
       while (!gameIsFinish) {
         bufferCounter = 0
 
-        var lastTailPos: Position = grid.snake.positions(grid.snake.length - 1)
-        var appleIndice = grid.snakeWillEatApple(movementX, movementY)
+        val lastTailPos: Position = grid.snake.positions(grid.snake.length - 1)
+        val appleIndice = grid.snakeWillEatApple(movementX, movementY)
 
         if (grid.snake.willLose(movementX, movementY)) {
           gameIsFinish = true
